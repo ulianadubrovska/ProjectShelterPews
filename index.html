@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Paws Shelter</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="container nav-content">
+        <div class="logo">Happy Paws</div>
+
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#animals">Animals</a>
+            <a href="#help">Help</a>
+            <a href="#about">About</a>
+            <a href="#game">Game</a>
+        </nav>
+
+        <button class="btn">Donate</button>
+    </div>
+</header>
+
+<section id="home" class="hero">
+    <div class="container hero-content">
+
+        <div class="hero-text">
+            <h1>Find your new best friend</h1>
+            <p>Adopt a pet and change a life forever</p>
+
+            <div class="hero-buttons">
+                <a href="#animals" class="btn">See animals</a>
+                <button class="btn-outline">Learn more</button>
+            </div>
+        </div>
+        <div class="paw paw1">🐾</div>
+        <div class="paw paw2">🐾</div>
+
+        <div class="hero-image">
+            <img src="img/hero.jpg" alt="Pets">
+        </div>
+
+    </div>
+</section>
+<section class="wave-divider">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path d="M0,64L80,74.7C160,85,320,107,480,106.7C640,107,800,85,960,69.3C1120,53,1280,43,1360,37.3L1440,32V120H0Z" fill="#ffffff"></path>
+    </svg>
+</section>
+<section class="why">
+    <div class="container">
+
+        <h2 class="section-title">Why adopt?</h2>
+
+        <div class="why-grid">
+            <div class="why-card">
+                <h3>❤️ Give love</h3>
+                <p>Animals need care and attention.</p>
+            </div>
+
+            <div class="why-card">
+                <h3>🐾 Save a life</h3>
+                <p>Adoption changes everything.</p>
+            </div>
+
+            <div class="why-card">
+                <h3>🏡 Find a friend</h3>
+                <p>A loyal companion forever.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section id="animals" class="animals">
+    <div class="container">
+        <h2>Our Animals</h2>
+        <p class="animals-subtitle">
+            Choose your perfect companion
+        </p>
+        <div class="categories">
+            <button>Dogs</button>
+            <button>Cats</button>
+            <button>Puppies</button>
+            <button>Kittens</button>
+            <button>Small animals</button>
+            <button>Special</button>
+        </div>
+
+        <input type="text" placeholder="Search..." class="search">
+
+        <div class="cards" id="animals-container"></div>
+    </div>
+</section>
+<section id="help" class="help">
+
+    <div class="container">
+
+        <!-- 🔥 ЗАГОЛОВОК ТУТ -->
+        <div class="help-header">
+            <h2>How to Help ❤️</h2>
+            <p>Choose how you can make a difference</p>
+        </div>
+
+        <div class="help-wrapper">
+
+            <!-- LEFT -->
+            <div class="help-left">
+                <div class="help-cards">
+
+                    <div class="help-card">
+                        <h3>💰 Donate</h3>
+                        <p>Support shelter needs and care</p>
+                        <button>Learn more</button>
+                    </div>
+
+                    <div class="help-card">
+                        <h3>🤝 Volunteer</h3>
+                        <p>Help animals directly</p>
+                        <button>Learn more</button>
+                    </div>
+
+                    <div class="help-card">
+                        <h3>🐾 Adopt</h3>
+                        <p>Give a pet a forever home</p>
+                        <button>Learn more</button>
+                    </div>
+
+                    <div class="help-card">
+                        <h3>🏡 Foster</h3>
+                        <p>Temporary home for pets</p>
+                        <button>Learn more</button>
+                    </div>
+
+                    <div class="help-card">
+                        <h3>📢 Share</h3>
+                        <p>Spread the word</p>
+                        <button>Learn more</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RIGHT IMAGE -->
+            <div class="help-image">
+                <img src="img/help.jpg" alt="Help animals">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="game" class="game">
+    <div class="container">
+
+        <h2>Shelter Game</h2>
+
+        <div class="game-box">
+            <h3>Pet from shelter</h3>
+
+            <img src="img/dog1.jpg" id="pet-image">
+
+            <div class="stats">
+                <p>Happiness <span id="happiness">80</span></p>
+                <p>Hunger <span id="hunger">50</span></p>
+                <p>Clean <span id="clean">70</span></p>
+                <p>Energy <span id="energy">60</span></p>
+            </div>
+
+            <div class="actions">
+                <button onclick="feedPet()">Feed</button>
+                <button onclick="playPet()">Play</button>
+                <button onclick="washPet()">Wash</button>
+                <button onclick="sleepPet()">Sleep</button>
+            </div>
+
+            <p id="status"></p>
+        </div>
+
+    </div>
+</section>
+
+<section id="about" class="about">
+    <div class="container about-wrapper">
+
+        <!-- LEFT -->
+        <div class="about-text">
+            <h2>About Our Shelter 🐾</h2>
+            <p>
+                We are a loving animal shelter dedicated to rescuing, caring,
+                and finding forever homes for pets in need.
+            </p>
+
+            <p class="about-highlight">
+                ❤️ 500+ animals rescued
+                🏡 300+ happy adoptions
+                🤝 Dozens of volunteers
+            </p>
+
+            <button class="btn">Learn more</button>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="about-cards">
+
+            <div class="about-card">
+                <h3>🐶 Rescue</h3>
+                <p>We save animals from difficult situations</p>
+            </div>
+
+            <div class="about-card">
+                <h3>🏥 Care</h3>
+                <p>Medical care and love for every pet</p>
+            </div>
+
+            <div class="about-card">
+                <h3>🏡 Adoption</h3>
+                <p>Helping animals find a new home</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<footer class="footer">
+
+    <div class="container footer-grid">
+
+        <!-- LOGO -->
+        <div class="footer-col">
+            <h3>🐾 Happy Paws</h3>
+            <p>
+                Helping animals find loving homes and better lives.
+            </p>
+        </div>
+
+        <!-- MENU -->
+        <div class="footer-col">
+            <h4>Menu</h4>
+            <a href="#home">Home</a>
+            <a href="#animals">Animals</a>
+            <a href="#help">How to Help</a>
+            <a href="#about">About</a>
+            <a href="#game">Game</a>
+        </div>
+
+        <!-- HELP -->
+        <div class="footer-col">
+            <h4>Help</h4>
+            <a href="#">Donate</a>
+            <a href="#">Volunteer</a>
+            <a href="#">Adopt</a>
+            <a href="#">Foster</a>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <p>📧 shelter@gmail.com</p>
+            <p>📍 Your City</p>
+            <p>📞 +380 00 000 00 00</p>
+
+            <div class="socials">
+                <span>🌐</span>
+                <span>📘</span>
+                <span>📸</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2025 Happy Paws Shelter
+    </div>
+
+</footer>
+<button id="topBtn">↑</button>
+
+<script src="js/app.js"></script>
+<script src="js/game.js"></script>
+
+</body>
+</html>

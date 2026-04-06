@@ -1,0 +1,630 @@
+/* =======================
+   RESET + BASE
+======================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f6f8f7;
+    color: #222;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+section {
+    animation: fade 0.8s ease;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* =======================
+   BUTTONS
+======================= */
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background: #1b5e20;
+}
+
+.btn-outline {
+    border: 2px solid #2e7d32;
+    background: transparent;
+    color: #2e7d32;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-outline:hover {
+    background: #2e7d32;
+    color: white;
+}
+
+/* =======================
+   NAVBAR
+======================= */
+.navbar {
+    background: white;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 600;
+}
+
+.nav-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-links a:hover {
+    color: #2e7d32;
+}
+
+/* =======================
+   HERO
+======================= */
+.hero {
+    padding: 80px 0;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-text {
+    max-width: 500px;
+    animation: fadeInLeft 1s ease;
+}
+
+.hero-text h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.hero-image {
+    animation: fadeInRight 1s ease;
+}
+
+.hero-image img {
+    width: 420px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    animation: float 4s ease-in-out infinite;
+}
+
+/* paws */
+.paw {
+    position: absolute;
+    opacity: 0.08;
+    font-size: 40px;
+    animation: float 6s infinite ease-in-out;
+}
+
+.paw1 { top: 200px; left: 50px; }
+.paw2 { top: 350px; right: 80px; }
+
+/* =======================
+   WAVE
+======================= */
+.wave-divider svg {
+    display: block;
+    width: 100%;
+    height: 80px;
+}
+
+/* =======================
+   WHY
+======================= */
+.why {
+    padding: 100px 0;
+    background: linear-gradient(180deg,#ffffff,#f1f8f4,#f6f8f7);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 30px;
+}
+
+.why-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.why-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* =======================
+   ANIMALS
+======================= */
+.animals {
+    padding: 100px 0;
+    background: linear-gradient(180deg,#f6f8f7,#eef7f2);
+    position: relative;
+}
+
+.animals h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+.animals h2::after {
+    content: "";
+    width: 60px;
+    height: 4px;
+    background: #2e7d32;
+    display: block;
+    margin: 10px auto;
+}
+
+.animals-subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 15px;
+}
+
+/* categories */
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 10px
+
+}
+
+.categories button {
+    padding: 10px 18px;
+    border-radius: 20px;
+    border: none;
+    background: #e0e0e0;
+    cursor: pointer;
+    transition: 0.3s;
+    flex: 1;              /* 🔥 всі однакові */
+    text-align: center;
+}
+
+.categories button:hover {
+    transform: translateY(-2px);
+    background: #c8e6c9;
+}
+
+.categories button.active {
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    color: white;
+    box-shadow: 0 5px 15px rgba(46,125,50,0.4);
+}
+
+/* search */
+.search {
+    width: 100%;
+    padding: 12px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    transition: 0.3s;
+}
+
+.search:focus {
+    border-color: #2e7d32;
+    box-shadow: 0 0 10px rgba(46,125,50,0.2);
+}
+
+/* cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* scrollbar */
+.cards::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+    background: #2e7d32;
+    border-radius: 10px;
+}
+
+/* card */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+    animation: fadeUp 0.5s ease;
+
+    margin-top: 20px;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: 0.5s;
+}
+
+.card:hover::before {
+    left: 100%;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(46,125,50,0.2);
+}
+
+/* image */
+.card-img {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.4s;
+}
+
+.card:hover img {
+    transform: scale(1.1);
+}
+
+/* overlay */
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 10px;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.card:hover .card-overlay {
+    opacity: 1;
+}
+
+/* =======================
+   HELP
+======================= */
+.help {
+    padding: 100px 0;
+    background: linear-gradient(180deg,#eef7f2,#f6f8f7);
+    position: relative;
+}
+
+.help-header {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeUp 0.6s ease;
+}
+
+.help-wrapper {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.help-cards {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+}
+
+.help-card {
+    padding: 20px;
+    border-radius: 20px;
+    transition: 0.3s;
+
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+
+    animation: fadeUp 0.6s ease;
+}
+
+.help-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(46,125,50,0.2);
+}
+
+.help-card button {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+/* image */
+.help-image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.help-image::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #c8e6c9, transparent);
+    filter: blur(60px);
+}
+
+.help-image img {
+    max-width: 450px;
+    border-radius: 30px;
+    position: relative;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+    transition: 0.4s;
+}
+
+.help-image img:hover {
+    transform: scale(1.03);
+}
+
+/* =======================
+   GAME
+======================= */
+.game {
+    padding: 60px 0;
+    text-align: center;
+}
+
+.game-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 400px;
+    margin: auto;
+}
+
+.actions button {
+    margin: 5px;
+    padding: 10px;
+    background: #81c784;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    transform: scale(1.1);
+}
+
+/* =======================
+   ABOUT
+======================= */
+.about {
+    padding: 100px 0;
+    background: linear-gradient(180deg,#f6f8f7,#e8f5e9);
+}
+
+.about-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.about-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+}
+
+/* =======================
+   FOOTER
+======================= */
+.footer {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+}
+
+.footer-col a {
+    display: block;
+    color: #c8e6c9;
+    text-decoration: none;
+    margin-bottom: 8px;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* =======================
+   SCROLL BUTTON
+======================= */
+#topBtn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+
+    width: 55px;
+    height: 55px;
+
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    color: white;
+
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    box-shadow: 0 10px 25px rgba(46,125,50,0.4);
+
+    transition: all 0.3s ease;
+
+    opacity: 0;
+    visibility: hidden;
+}
+#topBtn.show {
+    opacity: 1;
+    visibility: visible;
+}
+#topBtn:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 35px rgba(46,125,50,0.6);
+}
+
+#topBtn::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(102,187,106,0.4);
+    animation: pulse 2s infinite;
+    z-index: -1;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    70% { transform: scale(1.5); opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* =======================
+   ANIMATIONS
+======================= */
+@keyframes fade {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@keyframes fadeUp {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1;}
+}
+
+@keyframes fadeInLeft {
+    from {opacity:0; transform:translateX(-30px);}
+    to {opacity:1;}
+}
+
+@keyframes fadeInRight {
+    from {opacity:0; transform:translateX(30px);}
+    to {opacity:1;}
+}
+
+@keyframes float {
+    0%,100% {transform: translateY(0);}
+    50% {transform: translateY(-10px);}
+}
+
+/* =======================
+   RESPONSIVE
+======================= */
+@media (max-width: 768px) {
+    .hero-content,
+    .help-wrapper,
+    .about-wrapper {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .why-grid,
+    .cards,
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}

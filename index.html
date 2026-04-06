@@ -161,35 +161,47 @@
 
 </section>
 
-<section id="game" class="game">
-    <div class="container">
+<div class="game-box big">
 
-        <h2>Shelter Game</h2>
+    <h3>Your Pet 🐾</h3>
 
-        <div class="game-box">
-            <h3>Pet from shelter</h3>
+    <img src="img/game" id="pet-image">
 
-            <img src="img/dog1.jpg" id="pet-image">
+    <!-- 🔥 ПРОГРЕС БАРИ -->
+    <div class="bars">
 
-            <div class="stats">
-                <p>Happiness <span id="happiness">80</span></p>
-                <p>Hunger <span id="hunger">50</span></p>
-                <p>Clean <span id="clean">70</span></p>
-                <p>Energy <span id="energy">60</span></p>
-            </div>
+        <div class="bar">
+            <span>😊 Happiness</span>
+            <div class="progress"><div id="happiness-bar"></div></div>
+        </div>
 
-            <div class="actions">
-                <button onclick="feedPet()">Feed</button>
-                <button onclick="playPet()">Play</button>
-                <button onclick="washPet()">Wash</button>
-                <button onclick="sleepPet()">Sleep</button>
-            </div>
+        <div class="bar">
+            <span>🍖 Hunger</span>
+            <div class="progress"><div id="hunger-bar"></div></div>
+        </div>
 
-            <p id="status"></p>
+        <div class="bar">
+            <span>🧼 Clean</span>
+            <div class="progress"><div id="clean-bar"></div></div>
+        </div>
+
+        <div class="bar">
+            <span>⚡ Energy</span>
+            <div class="progress"><div id="energy-bar"></div></div>
         </div>
 
     </div>
-</section>
+
+    <div class="actions">
+        <button onclick="openGame('feed')">🍖 Feed</button>
+        <button onclick="openGame('play')">🎾 Play</button>
+        <button onclick="openGame('wash')">🧼 Wash</button>
+        <button onclick="openGame('sleep')">😴 Sleep</button>
+    </div>
+
+    <p id="status"></p>
+
+</div>
 
 <section id="about" class="about">
     <div class="container about-wrapper">
@@ -289,6 +301,9 @@
 
 <script src="js/app.js"></script>
 <script src="js/game.js"></script>
-
+<div id="gameModal" class="modal hidden">
+    <div class="modal-content" id="modalContent"></div>
+    <button class="close-btn" onclick="closeModal()">✖</button>
+</div>
 </body>
 </html>

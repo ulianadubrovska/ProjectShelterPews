@@ -173,44 +173,77 @@
                     <button class="btn" onclick="choosePet('dog')">🐶 Песик</button>
                 </div>
             </div>
-
             <div id="pet-ui" style="display: none;">
-                <h3 id="pet-name-display">Your Pet</h3>
+
+                <h3 id="pet-name-display">Котик</h3>
                 <p id="level-info">Level: 1 | XP: 0/100</p>
-
-                <div class="pet-window">
-                    <img src="" id="pet-image" class="pet-idle">
+                <p class="hint">💡 Досягни 5 рівня щоб відкрити другого улюбленця!</p>
+                <!-- 🐾 ПЕТ -->
+                <div class="pet-stage">
+                    <img src="" id="pet-image" class="pet-main">
                 </div>
 
-                <div class="bars">
-                    <div class="bar">
-                        <span>😊 Happiness</span>
-                        <div class="progress"><div id="happiness-bar" style="width: 80%;"></div></div>
+                <!-- 📊 СТАТИ -->
+                <div class="stats-row">
+
+                    <div class="stat-box">
+                        <div class="stat-top-line">
+                            <span>😊</span>
+                            <span id="happiness-text">80%</span>
+                        </div>
+                        <div class="mini-bar">
+                            <div id="happiness-bar"></div>
+                        </div>
                     </div>
-                    <div class="bar">
-                        <span>🍖 Hunger</span>
-                        <div class="progress"><div id="hunger-bar" style="width: 50%;"></div></div>
+
+                    <div class="stat-box">
+                        <div class="stat-top-line">
+                            <span>🍖</span>
+                            <span id="hunger-text">50%</span>
+                        </div>
+                        <div class="mini-bar">
+                            <div id="hunger-bar"></div>
+                        </div>
                     </div>
-                    <div class="bar">
-                        <span>🧼 Clean</span>
-                        <div class="progress"><div id="clean-bar" style="width: 70%;"></div></div>
+
+                    <div class="stat-box">
+                        <div class="stat-top-line">
+                            <span>🧼</span>
+                            <span id="clean-text">70%</span>
+                        </div>
+                        <div class="mini-bar">
+                            <div id="clean-bar"></div>
+                        </div>
                     </div>
-                    <div class="bar">
-                        <span>⚡ Energy</span>
-                        <div class="progress"><div id="energy-bar" style="width: 60%;"></div></div>
+
+                    <div class="stat-box">
+                        <div class="stat-top-line">
+                            <span>⚡</span>
+                            <span id="energy-text">60%</span>
+                        </div>
+                        <div class="mini-bar">
+                            <div id="energy-bar"></div>
+                        </div>
                     </div>
+
                 </div>
 
+                <!-- 🎮 КНОПКИ -->
                 <div class="actions">
-                    <button class="btn" onclick="feedPet()">🍖 Feed</button>
-                    <button class="btn" onclick="playPet()">🎾 Play</button>
-                    <button class="btn" onclick="washPet()">🧼 Wash</button>
-                    <button class="btn" onclick="sleepPet()">😴 Sleep</button>
+                    <button class="btn" onclick="openGame('feed')">🍖 Feed</button>
+                    <button class="btn" onclick="openGame('play')">🎾 Play</button>
+                    <button class="btn" onclick="openGame('wash')">🧼 Wash</button>
+                    <button class="btn" onclick="openGame('sleep')">😴 Sleep</button>
                 </div>
-                <p id="status-text"></p>
-                
-                <button id="add-pet-btn" class="btn" style="display:none; background: gold; margin-top:15px;" onclick="location.reload()">✨ Завести ще одного!</button>
+
+                <!-- 🎒 ІНВЕНТАР -->
+                <div class="inventory">
+                    <h4>🎒 Inventory</h4>
+                    <div id="inventory-items"></div>
+                </div>
+
             </div>
+
         </div>
     </div>
 </section>

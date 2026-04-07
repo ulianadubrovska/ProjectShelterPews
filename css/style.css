@@ -828,3 +828,13 @@ h2 {
     font-size: 25px;
     cursor: pointer;
 }
+
+#sleep-pet, #wash-pet, #pet-image-main {
+    pointer-events: none; /* Тваринка не заважає клікати на об'єкти */
+    position: relative;
+    z-index: 1;
+}
+
+.food, .dirt {
+    z-index: 10; /* Об'єкти для гри завжди зверху */
+}

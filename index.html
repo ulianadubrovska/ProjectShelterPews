@@ -161,47 +161,59 @@
 
 </section>
 
-<div class="game-box big">
+<section id="game" class="game-section">
+    <div class="container">
+        <h2 class="section-title">Adopt a virtual pet 🐾</h2>
+        
+        <div class="game-box big">
+            <div id="selection-screen">
+                <h3>Обери свого друга:</h3>
+                <div class="choice-btns">
+                    <button class="btn" onclick="choosePet('cat')">🐱 Котик</button>
+                    <button class="btn" onclick="choosePet('dog')">🐶 Песик</button>
+                </div>
+            </div>
 
-    <h3>Your Pet 🐾</h3>
+            <div id="pet-ui" style="display: none;">
+                <h3 id="pet-name-display">Your Pet</h3>
+                <p id="level-info">Level: 1 | XP: 0/100</p>
 
-    <img src="img/game" id="pet-image">
+                <div class="pet-window">
+                    <img src="" id="pet-image" class="pet-idle">
+                </div>
 
-    <!-- 🔥 ПРОГРЕС БАРИ -->
-    <div class="bars">
+                <div class="bars">
+                    <div class="bar">
+                        <span>😊 Happiness</span>
+                        <div class="progress"><div id="happiness-bar" style="width: 80%;"></div></div>
+                    </div>
+                    <div class="bar">
+                        <span>🍖 Hunger</span>
+                        <div class="progress"><div id="hunger-bar" style="width: 50%;"></div></div>
+                    </div>
+                    <div class="bar">
+                        <span>🧼 Clean</span>
+                        <div class="progress"><div id="clean-bar" style="width: 70%;"></div></div>
+                    </div>
+                    <div class="bar">
+                        <span>⚡ Energy</span>
+                        <div class="progress"><div id="energy-bar" style="width: 60%;"></div></div>
+                    </div>
+                </div>
 
-        <div class="bar">
-            <span>😊 Happiness</span>
-            <div class="progress"><div id="happiness-bar"></div></div>
+                <div class="actions">
+                    <button class="btn" onclick="feedPet()">🍖 Feed</button>
+                    <button class="btn" onclick="playPet()">🎾 Play</button>
+                    <button class="btn" onclick="washPet()">🧼 Wash</button>
+                    <button class="btn" onclick="sleepPet()">😴 Sleep</button>
+                </div>
+                <p id="status-text"></p>
+                
+                <button id="add-pet-btn" class="btn" style="display:none; background: gold; margin-top:15px;" onclick="location.reload()">✨ Завести ще одного!</button>
+            </div>
         </div>
-
-        <div class="bar">
-            <span>🍖 Hunger</span>
-            <div class="progress"><div id="hunger-bar"></div></div>
-        </div>
-
-        <div class="bar">
-            <span>🧼 Clean</span>
-            <div class="progress"><div id="clean-bar"></div></div>
-        </div>
-
-        <div class="bar">
-            <span>⚡ Energy</span>
-            <div class="progress"><div id="energy-bar"></div></div>
-        </div>
-
     </div>
-
-    <div class="actions">
-        <button onclick="openGame('feed')">🍖 Feed</button>
-        <button onclick="openGame('play')">🎾 Play</button>
-        <button onclick="openGame('wash')">🧼 Wash</button>
-        <button onclick="openGame('sleep')">😴 Sleep</button>
-    </div>
-
-    <p id="status"></p>
-
-</div>
+</section>
 
 <section id="about" class="about">
     <div class="container about-wrapper">

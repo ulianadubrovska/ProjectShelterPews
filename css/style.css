@@ -628,37 +628,155 @@ h2 {
         grid-template-columns: 1fr;
     }
 }
-
-/* GAME BIG */
+/* =======================
+   🎮 GAME BOX
+======================= */
 .game-box.big {
     max-width: 800px;
     padding: 40px;
+    border-radius: 25px;
+    background: #ffffff;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
 }
 
-/* bars */
-.bars {
+/* =======================
+   🎮 PET UI
+======================= */
+#pet-ui {
+    animation: fadeUp 0.5s ease;
+}
+
+/* =======================
+   🐾 PET STAGE
+======================= */
+.pet-stage {
+    height: 260px;
+    background: linear-gradient(#e8f5e9, #ffffff);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 20px 0;
 }
 
-.bar {
-    margin-bottom: 15px;
+.pet-main {
+    width: 180px;
+    transition: 0.3s;
 }
 
-.progress {
-    width: 100%;
-    height: 10px;
+.pet-main:hover {
+    transform: scale(1.05);
+}
+
+/* =======================
+   📊 STATS
+======================= */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.stat-box {
+    background: #f1f8f4;
+    border-radius: 15px;
+    padding: 12px;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.stat-box:hover {
+    transform: translateY(-4px);
+}
+
+/* верх ряд */
+.stat-top-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+/* бар */
+.mini-bar {
+    height: 8px;
     background: #ddd;
     border-radius: 10px;
+    margin-top: 5px;
     overflow: hidden;
 }
 
-.progress div {
+.mini-bar div {
     height: 100%;
     background: #2e7d32;
-    width: 50%;
+    transition: width 0.3s;
 }
 
-/* MODAL */
+/* текст % */
+.stat-box span {
+    font-size: 12px;
+    color: #555;
+}
+
+/* =======================
+   🎮 ACTION BUTTONS
+======================= */
+.actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* НЕ міняємо глобальні кнопки */
+.game-section .actions .btn {
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 12px;
+}
+
+/* =======================
+   🎒 INVENTORY
+======================= */
+.inventory {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e8f5e9;
+    border-radius: 15px;
+}
+
+#inventory-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 10px;
+}
+
+.inv-item {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.inv-item:hover {
+    transform: scale(1.1);
+    background: #c8e6c9;
+}
+
+/* =======================
+   💡 HINT
+======================= */
+.hint {
+    font-size: 13px;
+    color: #2e7d32;
+    margin-top: 5px;
+}
+
+/* =======================
+   🎮 MODAL (залишаємо)
+======================= */
 .modal {
     position: fixed;
     top:0;
@@ -695,96 +813,117 @@ h2 {
     padding:10px;
     border-radius:10px;
 }
-/* SLEEP GAME */
-.sleep-game {
-    text-align: center;
-}
 
-.room {
+/* =======================
+   🎮 ANIMATION
+======================= */
+@keyframes fadeUp {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1;}
+}
+/* 🌟 SELECTION BLOCK */
+/* 🌟 MAIN GAME BOX */
+.game-box.big {
     position: relative;
-    height: 300px;
-    border-radius: 20px;
-    margin: 20px 0;
+    max-width: 800px;
+    padding: 40px;
+    border-radius: 25px;
+    background: #ffffff;
     overflow: hidden;
-    transition: 0.5s;
 }
 
-/* DAY */
-.room.day {
-    background: linear-gradient(#a8e6ff, #ffffff);
-}
-
-/* NIGHT */
-.room.night {
-    background: linear-gradient(#0f2027, #203a43, #2c5364);
-}
-
-/* PET */
-#sleep-pet {
-    width: 150px;
-    margin-top: 50px;
-    transition: 0.5s;
-}
-
-/* sleeping effect */
-.sleeping {
-    opacity: 0.7;
-    transform: scale(0.9);
-}
-
-/* lamp */
-.lamp {
+/* 🔥 НЕОНОВА РАМКА */
+.game-box.big::before {
+    content: "";
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 30px;
-    cursor: pointer;
+    inset: -2px;
+    border-radius: 28px;
+    background: linear-gradient(
+            120deg,
+            #2e7d32,
+            #66bb6a,
+            #81c784,
+            #2e7d32
+    );
+    background-size: 300%;
+    animation: borderMove 6s linear infinite;
+    z-index: 0;
 }
 
-/* stars */
-.stars {
+/* внутрішній шар */
+.game-box.big::after {
+    content: "";
     position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 20px;
+    inset: 3px;
+    background: #ffffff;
+    border-radius: 25px;
+    z-index: 1;
 }
 
-/* hidden */
-.hidden {
-    display: none;
-}
-/* FEED GAME */
-.feed-game {
-    text-align: center;
-}
-
-#feed-area {
+/* щоб контент був поверх */
+.game-box.big > * {
     position: relative;
-    height: 300px;
-    background: #e8f5e9;
-    border-radius: 20px;
-    overflow: hidden;
-    margin: 20px 0;
+    z-index: 2;
 }
 
-/* їжа */
-.food {
-    position: absolute;
-    font-size: 30px;
+/* ✨ рух рамки */
+@keyframes borderMove {
+    0% { background-position: 0% }
+    100% { background-position: 300% }
+}
+
+/* 🔄 рух рамки */
+@keyframes neonBorder {
+    0% { background-position: 0% }
+    100% { background-position: 300% }
+}
+
+/* 📝 TEXT */
+#selection-screen h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #2e7d32;
+    letter-spacing: 0.5px;
+}
+
+/* 🐾 BUTTON WRAPPER */
+.choice-btns {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* 💚 КНОПКИ */
+.choice-btns .btn {
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    border: none;
+    border-radius: 25px;
+    padding: 12px 25px;
+    font-size: 14px;
+    color: white;
     cursor: pointer;
-    animation: fall linear;
+
+    /* glow */
+    box-shadow: 0 0 10px rgba(46,125,50,0.5);
+
+    /* анімація */
+    animation: pulseBtn 2s infinite;
+    transition: 0.3s;
 }
 
-@keyframes fall {
-    from { top: -40px; }
-    to { top: 100%; }
-}
-/* MEMORY GAME */
-.memory-game {
-    text-align: center;
+/* hover */
+.choice-btns .btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(46,125,50,0.9);
 }
 
-#memory-grid {
+/* ✨ пульсація */
+@keyframes pulseBtn {
+    0% { transform: scale(1); box-shadow: 0 0 8px rgba(46,125,50,0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 0 18px rgba(46,125,50,0.8); }
+    100% { transform: scale(1); box-shadow: 0 0 8px rgba(46,125,50,0.4); }
+}
+.memory-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
@@ -801,40 +940,14 @@ h2 {
     justify-content:center;
     font-size: 30px;
     color: white;
+    transition: 0.3s;
+    background: linear-gradient(135deg, #2e7d32, #66bb6a);
+    box-shadow: 0 5px 15px rgba(46,125,50,0.4);
 }
 
+/* відкриті */
 .memory-card.open {
     background: white;
     color: black;
-}
-/* WASH GAME */
-.wash-game {
-    text-align: center;
-}
-
-.wash-area {
-    position: relative;
-    height: 300px;
-    margin: 20px 0;
-}
-
-#wash-pet {
-    width: 200px;
-}
-
-/* dirt */
-.dirt {
-    position: absolute;
-    font-size: 25px;
-    cursor: pointer;
-}
-
-#sleep-pet, #wash-pet, #pet-image-main {
-    pointer-events: none; /* Тваринка не заважає клікати на об'єкти */
-    position: relative;
-    z-index: 1;
-}
-
-.food, .dirt {
-    z-index: 10; /* Об'єкти для гри завжди зверху */
+    transform: scale(1.05);
 }

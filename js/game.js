@@ -1,10 +1,11 @@
 // 🐾 Конфігурація
 const petsConfig = {
-    "cat": { name: "Котик", img: "img/cats/cat1.jpg" },
-    "dog": { name: "Песик", img: "img/dogs/dog1.jpg" }
+    "cat": { name: "Котик", img: "img/cats/cat1.webp" },
+    "dog": { name: "Песик", img: "img/dogs/dog1.webp" }
 };
 
-let currentPetType = "cat"; // Значення за замовчуванням
+let currentPetType = "cat"; // Значення
+// за замовчуванням
 let pet = {
     happiness: 80,
     hunger: 50,

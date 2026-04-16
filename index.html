@@ -87,18 +87,47 @@
         <p class="animals-subtitle">
             Choose your perfect companion
         </p>
-        <div class="categories">
-            <button>Dogs</button>
-            <button>Cats</button>
-            <button>Puppies</button>
-            <button>Kittens</button>
-            <button>Small animals</button>
-            <button>Special</button>
+        <div class="animals-layout">
+
+            <!-- 🔵 SIDEBAR -->
+            <aside class="filters">
+
+                <h3>Filters</h3>
+
+                <!-- CATEGORY -->
+                <div class="filter-group">
+                    <p>Animal type</p>
+                    <label><input type="checkbox" value="dogs"> Dogs</label>
+                    <label><input type="checkbox" value="cats"> Cats</label>
+                    <label><input type="checkbox" value="puppies"> Puppies</label>
+                    <label><input type="checkbox" value="kittens"> Kittens</label>
+                    <label><input type="checkbox" value="smallanimals"> Small</label>
+                    <label><input type="checkbox" value="special"> Special</label>
+                </div>
+
+                <div class="filter-group">
+                    <p>Age</p>
+                    <div class="chips">
+                        <label class="chip"><input type="checkbox" value="baby"> 0–1 year</label>
+                        <label class="chip"><input type="checkbox" value="young"> 1–3 years</label>
+                        <label class="chip"><input type="checkbox" value="adult"> 3+ years</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <p>Gender</p>
+                    <div class="chips">
+                        <label class="chip"><input type="checkbox" value="boy"> Boy</label>
+                        <label class="chip"><input type="checkbox" value="girl"> Girl</label>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- 🟢 CARDS -->
+            <div class="cards" id="animals-container"></div>
+
         </div>
-
-        <input type="text" placeholder="Search..." class="search">
-
-        <div class="cards" id="animals-container"></div>
     </div>
 </section>
 <section id="help" class="help">

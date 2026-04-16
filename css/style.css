@@ -275,21 +275,24 @@ h2 {
 /* cards */
 .cards {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 20px;
-    max-height: 600px;
     overflow-y: auto;
+    align-content: start;
     padding-right: 10px;
 }
 
-/* scrollbar */
 .cards::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
+}
+
+.cards::-webkit-scrollbar-track {
+    background: transparent;
 }
 
 .cards::-webkit-scrollbar-thumb {
-    background: #2e7d32;
-    border-radius: 10px;
+    background: linear-gradient(#2e7d32, #66bb6a);
+    border-radius: 20px;
 }
 
 /* card */
@@ -300,11 +303,17 @@ h2 {
     text-align: center;
     position: relative;
     overflow: hidden;
-    transition: 0.3s;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+
+    will-change: transform, opacity; /* плавність */
+
     animation: fadeUp 0.5s ease;
 
     margin-top: 20px;
+
+    min-height: 320px;
 }
+
 
 .card::before {
     content: "";
@@ -321,7 +330,8 @@ h2 {
 }
 
 .card:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-8px) scale(1.03);
+    z-index: 2;
     box-shadow: 0 20px 40px rgba(46,125,50,0.2);
 }
 
@@ -950,4 +960,202 @@ h2 {
     background: white;
     color: black;
     transform: scale(1.05);
+}
+/* 🔥 layout */
+.animals-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 30px;
+    margin-top: 30px;
+    height: 80vh;
+}
+
+/* 🔵 sidebar */
+.filters {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(15px);
+    padding: 15px;
+    border-radius: 20px;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+
+    position: sticky;
+    top: 100px;
+
+    transition: 0.3s;
+}
+
+.filters:hover {
+    transform: translateY(-5px);
+}
+
+.filters h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+}
+
+.filter-group p {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.filter-group {
+    margin-bottom: 25px;
+}
+
+.filter-group p {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2e7d32;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+
+.filter-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: #f1f8f4;
+    padding: 6px 10px;
+    border-radius: 10px;
+
+    margin-bottom: 6px;
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+/* hover */
+.filter-group label:hover {
+    background: #c8e6c9;
+    transform: translateX(5px);
+}
+
+/* checked */
+.filter-group input:checked + span,
+.filter-group input:checked {
+    accent-color: #2e7d32;
+}
+
+.chip input {
+    display: none;
+}
+.chip.active {
+    background: #2e7d32;
+    color: white;
+    border-color: #2e7d32;
+
+    box-shadow: 0 4px 10px rgba(46,125,50,0.3);
+    transform: translateY(-1px);
+}
+
+/* hover */
+.chip:hover {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+/* ховаємо чекбокс */
+.filter-group.chips .chip input {
+    display: none;
+}
+
+/* сама кнопка */
+.filter-group.chips .chip {
+    padding: 8px 16px;
+    border-radius: 999px;
+
+    background: #f1f3f2;
+    color: #444;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    border: 1px solid #e0e0e0;
+
+    transition: all 0.25s ease;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.filter-group.chips .chip:hover {
+    background: #e8f5e9;
+    border-color: #81c784;
+    color: #2e7d32;
+
+    transform: translateY(-2px);
+}
+
+
+.filter-group.chips .chip:active {
+    transform: scale(0.95);
+}
+/* ===== CHIPS (AGE + GENDER) ===== */
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chip {
+    padding: 6px 14px;
+    border-radius: 999px;
+
+    background: #f1f3f2;
+    border: 1px solid #ddd;
+
+    font-size: 13px;
+    color: #444;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* hide checkbox */
+.chip input {
+    display: none;
+}
+
+/* hover */
+.chip:hover {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-color: #81c784;
+}
+
+/* active */
+.chip.active {
+    background: #2e7d32;
+    color: white;
+    border-color: #2e7d32;
+
+    box-shadow: 0 4px 10px rgba(46,125,50,0.25);
+}
+/* 📱 адаптив */
+@media (max-width: 1200px) {
+    .cards {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .animals-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

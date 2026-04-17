@@ -514,24 +514,101 @@ h2 {
     background: linear-gradient(135deg, #1b5e20, #2e7d32);
     color: white;
     padding: 60px 0 20px;
+    position: relative;
+    overflow: hidden;
 }
-
+.footer-col p {
+    margin-top: 10px;
+    line-height: 1.6;
+    color: #e8f5e9;
+}
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
+    gap: 60px;
 }
-
+.footer::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(102,187,106,0.3), transparent);
+    top: -50px;
+    right: -50px;
+    filter: blur(80px);
+}
 .footer-col a {
     display: block;
     color: #c8e6c9;
     text-decoration: none;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+
+    font-size: 14px;
+    letter-spacing: 0.3px;
+
+    transition: all 0.25s ease;
 }
 
+/* 🔥 hover */
+.footer-col a:hover {
+    color: #ffffff;
+    transform: translateX(4px);
+    opacity: 0.9;
+}
+.footer-col h4 {
+    margin-bottom: 15px;
+    font-size: 15px;
+    position: relative;
+}
+
+
+/* контакт */
+.footer-item {
+    margin-bottom: 6px;
+    color: #e8f5e9;
+    transition: 0.2s;
+}
+
+.footer-item:hover {
+    transform: translateX(5px);
+}
+
+/* 🔥 соц мережі */
+.socials {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.socials span {
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.socials span:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* бейдж */
+.footer-badge {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #c8e6c9;
+}
+
+/* роздільник */
+.footer-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin: 30px 0 10px;
+}
+
+/* нижній текст */
 .footer-bottom {
     text-align: center;
-    margin-top: 40px;
+    font-size: 13px;
+    color: #c8e6c9;
 }
 
 /* =======================

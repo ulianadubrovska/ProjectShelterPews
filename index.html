@@ -194,20 +194,19 @@
     <div class="container">
         <h2 class="section-title">Adopt a virtual pet 🐾</h2>
         
-        <div class="game-box big">
-            <div id="selection-screen">
-                <h3>Обери свого друга:</h3>
-                <div class="choice-btns">
-                    <button class="btn" onclick="choosePet('cat')">🐱 Котик</button>
-                    <button class="btn" onclick="choosePet('dog')">🐶 Песик</button>
-                </div>
-            </div>
-            <div id="pet-ui" style="display: none;">
+        <div class="game-box big" id="game-area">
 
-                <h3 id="pet-name-display">Котик</h3>
+            <div id="pet-ui" >
+
+                <h3 id="pet-name-display">Cat</h3>
+
+                <button id="sound-toggle">🔊</button>
                 <!-- 🐾 ПЕТ -->
                 <div class="pet-stage">
-                    <img src="" id="pet-image" class="pet-main">
+                    <div id="pet-sprite" class="pet-sprite"></div>
+
+                    <!-- 🟠 М'яч -->
+                    <div id="ball" class="ball">🧶</div>
                 </div>
 
                 <!-- 📊 СТАТИ -->
@@ -259,8 +258,8 @@
                 <div class="actions">
                     <button class="btn" onclick="openGame('feed')">🍖 Feed</button>
                     <button class="btn" onclick="openGame('play')">🎾 Play</button>
-                    <button class="btn" onclick="openGame('wash')">🧼 Wash</button>
-                    <button class="btn" onclick="openGame('sleep')">😴 Sleep</button>
+                    <button class="btn" onclick="startWash()">🧼 Wash</button>
+                    <button class="btn" onclick="startSleep()">😴 Sleep</button>
                 </div>
 
                 <!-- 🎒 ІНВЕНТАР -->

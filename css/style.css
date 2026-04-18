@@ -744,7 +744,292 @@ h2 {
     align-items: center;
     justify-content: center;
     margin: 20px 0;
+    position: relative;
 }
+
+
+#game-area {
+    position: relative;
+}
+
+#game-area > * {
+    position: relative;
+    z-index: 10;
+}
+
+
+#game-area.night::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(#0b1a3a, #020617);
+    z-index: 5;
+    border-radius: 25px;
+    opacity: 0.95;
+}
+
+/* затемнення поверх */
+#game-area.night::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,40,0.6);
+    pointer-events: none;
+}
+/* 🌙 NIGHT MODE */
+/* 🌙 NIGHT MODE ТІЛЬКИ ДЛЯ ГРИ */
+.game-box.big.sleep-mode {
+    background: linear-gradient(#0b1a3a, #020617);
+    transition: 0.5s;
+}
+.game-box.big {
+    overflow: hidden;
+}
+/* внутрішній білий шар */
+.game-box.big.sleep-mode::after {
+    background: #1e293b;
+}
+
+/* сцена */
+.game-box.big.sleep-mode .pet-stage {
+    background: linear-gradient(#1e3a5f, #0f172a);
+}
+
+/* показники */
+.game-box.big.sleep-mode .stat-box {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+/* бари */
+.game-box.big.sleep-mode .mini-bar {
+    background: #1e293b;
+}
+
+.game-box.big.sleep-mode .mini-bar div {
+    background: #60a5fa;
+}
+
+/* кнопки */
+.game-box.big.sleep-mode .actions .btn {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: white;
+}
+
+.game-box.big.sleep-mode .actions .btn:hover {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+/* інвентар */
+.game-box.big.sleep-mode .inventory {
+    background: #1e293b;
+}
+
+.game-box.big.sleep-mode .inv-item {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+.game-box.big.sleep-mode .inv-item:hover {
+    background: #475569;
+}
+/* 🌙 текст */
+.game-box.big.sleep-mode,
+.game-box.big.sleep-mode h1,
+.game-box.big.sleep-mode h2,
+.game-box.big.sleep-mode h3,
+.game-box.big.sleep-mode p,
+.game-box.big.sleep-mode span {
+    color: #e2e8f0;
+}
+
+.game-box.big.sleep-mode .stat-top-line span {
+    color: #cbd5f5;
+}
+.game-box.big.sleep-mode #pet-name-display {
+    color: #e2e8f0;
+}
+
+.game-box.big.sleep-mode .inventory h3 {
+    color: #e2e8f0;
+}
+
+.game-box.big.sleep-mode * {
+    border-color: rgba(255,255,255,0.1);
+}
+/* 🌙 НЕОНОВА РАМКА В НОЧІ */
+.game-box.big.sleep-mode::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 28px;
+
+    background: linear-gradient(
+            120deg,
+            #60a5fa,
+            #3b82f6,
+            #93c5fd,
+            #60a5fa
+    );
+
+    background-size: 300%;
+    animation: neonMove 6s linear infinite;
+
+    z-index: 0;
+}
+
+/* внутрішній шар */
+.game-box.big.sleep-mode::after {
+    background: #1e293b;
+    z-index: 1;
+}
+
+/* контент поверх */
+.game-box.big.sleep-mode > * {
+    position: relative;
+    z-index: 2;
+}
+@keyframes neonMove {
+    0% { background-position: 0% }
+    100% { background-position: 300% }
+}
+.game-box.big.sleep-mode {
+    box-shadow:
+            0 0 20px rgba(96,165,250,0.4),
+            0 0 40px rgba(59,130,246,0.3),
+            0 0 80px rgba(59,130,246,0.2);
+}
+
+.game-box.big.sleep-mode .actions .btn {
+    box-shadow: 0 0 10px rgba(96,165,250,0.6);
+}
+.game-box.big.sleep-mode .mini-bar div {
+    box-shadow: 0 0 8px rgba(96,165,250,0.8);
+}
+
+.game-box.big.wash-mode {
+    background: linear-gradient(#dbeafe, #eff6ff);
+}
+
+.game-box.big.wash-mode .pet-stage {
+    background: linear-gradient(#bfdbfe, #e0f2fe);
+}
+/* 🧽 губка */
+/* 🧽 губка */
+.sponge {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(#ffd54f, #ffb300);
+    border-radius: 8px;
+    pointer-events: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 30;
+    transition: transform 0.1s;
+}
+
+/* 💩 бруд */
+.dirt {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #5d4037;
+    border-radius: 50%;
+    z-index: 20;
+}
+
+/* 🫧 піна */
+.foam {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: radial-gradient(circle, white, rgba(255,255,255,0.3));
+    border-radius: 50%;
+    animation: foamPop 0.5s forwards;
+    z-index: 25;
+}
+
+@keyframes foamPop {
+    from { transform: scale(0.5); opacity: 1; }
+    to { transform: scale(1.5); opacity: 0; }
+}
+
+.game-box.big.washing .mini-bar div {
+    background: #60a5fa !important; /* голубий */
+    box-shadow: none !important;
+}
+
+/* тільки clean світиться */
+.game-box.big.washing #clean-bar {
+    background: #38bdf8 !important;
+    box-shadow: 0 0 12px rgba(56,189,248,0.9);
+}
+
+/* кнопка Wash */
+.active-wash {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9) !important;
+    box-shadow: 0 0 15px rgba(56,189,248,0.8);
+}
+/* 🫧 бульбашки */
+.bubble {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 50%;
+    animation: bubblePop 0.7s ease forwards;
+}
+
+@keyframes bubblePop {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+}
+
+.dirt:hover {
+    transform: scale(1.2);
+}
+
+.actions .btn.active-wash {
+    background: linear-gradient(135deg, #38bdf8, #60a5fa);
+    box-shadow: 0 0 12px rgba(56,189,248,0.7);
+}
+
+.game-box.big.wash-mode .actions .btn {
+    background: linear-gradient(135deg, #38bdf8, #60a5fa);
+}
+
+.game-box.big.wash-mode .actions .btn:hover {
+    background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+}
+/* коли миється */
+.game-box.big.wash-mode #clean-bar {
+    background: linear-gradient(90deg, #38bdf8, #7dd3fc);
+    box-shadow: 0 0 10px rgba(56,189,248,0.8);
+}
+
+/* сама карточка */
+.game-box.big.wash-mode .stat-box:nth-child(3) {
+    box-shadow: 0 0 15px rgba(56,189,248,0.4);
+}
+
+#ball {
+    font-size: 28px;
+
+    position: absolute;
+    bottom: 0px;   /* 🔥 ближче до статів */
+    right: 0px;     /* 🔥 правий кут біля енергії */
+
+    cursor: pointer;
+
+    transition: transform 0.2s;
+    z-index: 20;
+}
+
+#ball:hover {
+    transform: scale(1.2);
+}
+
+
 
 .pet-main {
     width: 180px;
@@ -825,6 +1110,8 @@ h2 {
 /* =======================
    🎒 INVENTORY
 ======================= */
+/* 🎒 INVENTORY (BLUE STYLE) */
+
 .inventory {
     margin-top: 20px;
     padding: 15px;
@@ -832,24 +1119,41 @@ h2 {
     border-radius: 15px;
 }
 
+/* 🔥 правильне вирівнювання */
 #inventory-items {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: flex-start; /* або center якщо хочеш */
 }
 
+/* 🔹 item */
 .inv-item {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     background: white;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 500;
+
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.25s;
+
+    border: 1px solid rgba(59,130,246,0.2);
 }
 
+/* hover */
 .inv-item:hover {
-    transform: scale(1.1);
-    background: #c8e6c9;
+    transform: translateY(-3px) scale(1.05);
+    background: #e0f2fe;
+    box-shadow: 0 5px 12px rgba(59,130,246,0.3);
 }
 
 /* =======================
@@ -1018,25 +1322,34 @@ h2 {
 }
 
 .memory-card {
-    background: #2e7d32;
     height: 80px;
     border-radius: 10px;
     cursor: pointer;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     font-size: 30px;
     color: white;
+
     transition: 0.3s;
-    background: linear-gradient(135deg, #2e7d32, #66bb6a);
-    box-shadow: 0 5px 15px rgba(46,125,50,0.4);
+
+    /* 🔵 НОВИЙ СТИЛЬ */
+    background: linear-gradient(135deg, #38bdf8, #3b82f6);
+    box-shadow: 0 5px 15px rgba(59,130,246,0.4);
 }
 
 /* відкриті */
 .memory-card.open {
-    background: white;
-    color: black;
+    background: #e0f2fe;
+    color: #0f172a;
+    transform: scale(1.08);
+    box-shadow: 0 0 10px rgba(56,189,248,0.6);
+}
+.memory-card:hover {
     transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(56,189,248,0.6);
 }
 /* 🔥 layout */
 .animals-layout {
@@ -1235,4 +1548,154 @@ h2 {
     .cards {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+.pet-sprite {
+    width: 48px;
+    height: 48px;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transform: scale(4);
+}
+
+
+.dead-mode {
+    filter: grayscale(100%) brightness(0.4);
+    background: rgba(255, 0, 0, 0.1);
+    position: relative;
+}
+
+.speech-bubble {
+    position: absolute;
+    background: white;
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    white-space: nowrap;
+}
+
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translate(-50%, 10px); }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, -10px); }
+}
+
+
+
+/* зона гри */
+#feed-area {
+    background: linear-gradient(#bfdbfe, #e0f2fe);
+    border-radius: 15px;
+    box-shadow: inset 0 0 20px rgba(59,130,246,0.2);
+}
+
+/* заголовок */
+.feed-game h2 {
+    color: #2563eb;
+}
+
+/* текст */
+.feed-game p {
+    color: #1e3a8a;
+    font-weight: 500;
+}
+
+/* кнопка finish */
+.feed-game .btn {
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    box-shadow: 0 5px 15px rgba(59,130,246,0.4);
+}
+
+.feed-game .btn:hover {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    transform: scale(1.05);
+}
+
+/* падаючі предмети */
+.food-item {
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+    transition: transform 0.2s;
+}
+
+.food-item:hover {
+    transform: scale(1.2);
+}
+
+#sound-toggle {
+    position: absolute;
+
+    top: -8px;
+    right: 0px;
+
+    z-index: 50;
+
+    background: rgba(255,255,255,0.8);
+    border: none;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    cursor: pointer;
+
+    font-size: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+    transition: 0.2s;
+}
+
+#sound-toggle:hover {
+    transform: scale(1.1);
+}
+
+#sound-toggle.off {
+    background: #aaa;
+}
+/* ☠️ DEAD MODE */
+.game-box.big.dead {
+    position: relative;
+    filter: grayscale(100%) brightness(0.5);
+}
+
+/* затемнення */
+.game-box.big.dead::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    border-radius: 25px;
+    z-index: 2;
+}
+
+/* ❤️ КНОПКА ПО ЦЕНТРУ */
+.btn#revive-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    z-index: 10;
+
+    background: linear-gradient(135deg, #8b0000, #b71c1c);
+    color: white;
+
+    padding: 14px 30px;
+    border-radius: 20px;
+
+    box-shadow: 0 0 20px rgba(183,28,28,0.7);
+}
+
+/* hover */
+#revive-btn:hover {
+    background: linear-gradient(135deg, #5a0000, #8b0000);
+    transform: translate(-50%, -50%) scale(1.05);
 }

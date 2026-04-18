@@ -1,18 +1,53 @@
 // 🐾 Конфігурація
 const petsConfig = {
-    "cat": { name: "Котик", img: "img/cats/cat1.webp" },
-    "dog": { name: "Песик", img: "img/dogs/dog1.webp" }
+    "cat": {
+        name: "Cat",
+
+        animations: {
+            idle: generateFrames("cat/idle", "cat_idle", 11),
+            sit: generateFrames("cat/sit", "cat_sit", 7),
+            sleep: generateFrames("cat/sleep", "cat_sleep", 4),
+            eat: generateFrames("cat/eat", "cat_eat", 8),
+            meow: generateFrames("cat/meow", "cat_meow", 7),
+            jump: generateFrames("cat/jump", "cat_jump", 15),
+            run: generateFrames("cat/run", "cat_run", 6),
+            crouch: generateFrames("cat/crouch", "cat_crouch", 4),
+            hurt: generateFrames("cat/hurt", "cat_hurt", 3),
+            death: generateFrames("cat/death", "cat_death", 8)
+        }
+    }
+};
+let soundEnabled = true;
+
+const sounds = {
+    purr: new Audio("sounds/purr.mp3"),
+    meow: new Audio("sounds/meow.mp3")
 };
 
-let currentPetType = "cat"; // Значення
+// налаштування
+sounds.purr.loop = true;
+sounds.purr.volume = 0.3;
+
+sounds.meow.volume = 0.7;
+function generateFrames(folder, name, count) {
+    const frames = [];
+
+    for (let i = 1; i <= count; i++) {
+        const num = String(i).padStart(3, "0");
+        frames.push(`img/game/${folder}/${name}_${num}.png`);
+    }
+
+    return frames;
+}
+
+const currentPetType = "cat"; // Значення
 // за замовчуванням
 let pet = {
     happiness: 80,
     hunger: 50,
     clean: 70,
     energy: 60,
-    level: 1,
-    xp: 0
+
 };
 let inventory = {
     fish: 0,
@@ -36,31 +71,38 @@ function updateUI() {
     setWidth("energy-bar", pet.energy);
 
     // Оновлення тексту рівня
-    const lvlEl = document.getElementById("level-info");
-    if (lvlEl) lvlEl.textContent = `Level: ${pet.level} | XP: ${pet.xp}/100`;
-}
 
-// ✨ Досвід та Рівні
-function addXP(amount) {
-    pet.xp += amount;
-    if (pet.xp >= 100) {
-        pet.level++;
-        pet.xp = 0;
-        alert(`🎉 Вітаємо! Новий рівень: ${pet.level}`);
-        if (pet.level === 3) {
-            const btn = document.getElementById("add-pet-btn");
-            if (btn) btn.style.display = "block";
-        }
-    }
-    updateUI();
+}
+function normalizePet() {
+    pet.happiness = Math.max(0, Math.min(100, pet.happiness));
+    pet.hunger = Math.max(0, Math.min(100, pet.hunger));
+    pet.clean = Math.max(0, Math.min(100, pet.clean));
+    pet.energy = Math.max(0, Math.min(100, pet.energy));
 }
 
 // ⏱ Життєвий цикл (кожні 4 секунди)
 setInterval(() => {
-    pet.hunger = Math.min(100, pet.hunger + 2);
-    pet.energy = Math.max(0, pet.energy - 1);
-    pet.clean = Math.max(0, pet.clean - 1);
-    pet.happiness = Math.max(0, pet.happiness - 1);
+    pet.hunger -= 2;
+    pet.energy -= 1;
+    pet.clean -= 1;
+    pet.happiness -= 1;
+
+    if (pet.hunger < 20) pet.happiness -= 2;
+    if (pet.clean < 30) pet.happiness -= 2;
+    if (pet.energy < 20) pet.happiness -= 2;
+    if (pet.hunger < 20) {
+        showBubble("🍖 Хочу їсти!");
+    }
+
+    if (pet.energy < 15) {
+        showBubble("😴 Я втомився...");
+    }
+
+    if (pet.clean < 20) {
+        showBubble("🧼 Я брудний...");
+    }
+    normalizePet();
+    checkPetState();
     updateUI();
 }, 4000);
 
@@ -68,25 +110,15 @@ setInterval(() => {
 let activeInterval; // Для очищення таймерів ігор
 
 function openGame(type) {
+    if (currentAction || petState === "dead") return; // ⛔ блок
+
     const modal = document.getElementById("gameModal");
     const content = document.getElementById("modalContent");
-    const petImg = petsConfig[currentPetType].img; // Беремо картинку обраної тварини
 
     modal.classList.remove("hidden");
     clearInterval(activeInterval); // Чистимо старі таймери
 
-    if (type === "sleep") {
-        content.innerHTML = `
-        <div class="sleep-game">
-            <h2>Sleep 🌙</h2>
-            <div class="room day" id="room">
-                <img src="${petImg}" id="sleep-pet" class="game-pet-img">
-                <div class="lamp" onclick="toggleSleep()">💡</div>
-                <div class="stars hidden" id="stars">✨✨✨</div>
-            </div>
-            <p id="sleep-status">Turn off the light to sleep</p>
-        </div>`;
-    }
+
 
     if (type === "feed") {
         content.innerHTML = `
@@ -109,54 +141,14 @@ function openGame(type) {
         startMemoryGame();
     }
 
-    if (type === "wash") {
-        content.innerHTML = `
-        <div class="wash-game">
-            <h2>Wash 🧼</h2>
-            <div class="wash-area" id="washArea" style="position:relative;">
-                <img src="${petImg}" id="wash-pet" class="game-pet-img">
-            </div>
-            <p>Cleaned: <span id="clean-count">0</span>/5</p>
-        </div>`;
-        startWashGame();
-    }
 }
 
 function closeModal() {
     document.getElementById("gameModal").classList.add("hidden");
     clearInterval(activeInterval);
-    if (sleeping) finishSleep(); // Зупиняємо сон, якщо закрили вікно
+    if (isSleeping) finishSleep(); // Зупиняємо сон, якщо закрили вікно
 }
 
-// =========================
-// 🌙 SLEEP LOGIC
-// =========================
-let sleeping = false;
-
-function toggleSleep() {
-    const room = document.getElementById("room");
-    const stars = document.getElementById("stars");
-
-    if (!sleeping) {
-        room.classList.replace("day", "night");
-        stars.classList.remove("hidden");
-        sleeping = true;
-        activeInterval = setInterval(() => {
-            pet.energy = Math.min(100, pet.energy + 5);
-            updateUI();
-            if (pet.energy >= 100) finishSleep();
-        }, 1000);
-    } else {
-        finishSleep();
-    }
-}
-
-function finishSleep() {
-    clearInterval(activeInterval);
-    sleeping = false;
-    addXP(15);
-    closeModal();
-}
 
 // =========================
 // 🍖 FEED LOGIC
@@ -210,14 +202,17 @@ function startFeedGame() {
 
     window.finishFeed = () => {
 
+        if (collected.length === 0) {
+            closeModal();
+            return;
+        }
+
         collected.forEach(item => {
             inventory[item]++;
         });
 
-        addXP(collected.length * 2);
-
+        updateInventoryUI(); // 🔥 ДО закриття
         closeModal();
-        updateInventoryUI();
     };
 }
 function updateInventoryUI() {
@@ -247,28 +242,24 @@ function updateInventoryUI() {
     });
 }
 function feedFromInventory(item) {
-
+    if (currentAction || petState === "dead") return;
     if (inventory[item] <= 0) return;
 
     inventory[item]--;
 
-    // різна їжа = різний ефект
-    if (item === "fish") pet.hunger -= 15;
-    if (item === "meat") pet.hunger -= 20;
-    if (item === "water") pet.hunger -= 5;
-
-    if (pet.hunger < 0) pet.hunger = 0;
+    if (item === "fish") pet.hunger += 20;
+    if (item === "meat") pet.hunger += 25;
+    if (item === "water") pet.hunger += 10;
 
     pet.happiness += 5;
+    pet.clean -= 2; // 👈 логічно (забруднився)
+
+    normalizePet();
 
     updateUI();
     updateInventoryUI();
 
-    // реакція
-    if (pet.hunger === 0) {
-        document.getElementById("status-text").textContent =
-            "😺 Я ситий, дякую!";
-    }
+    playAnimation("eat", false, 120);
 }
 
 // =========================
@@ -276,55 +267,65 @@ function feedFromInventory(item) {
 // =========================
 function winMemoryGame() {
     pet.happiness = Math.min(100, pet.happiness + 25);
-    addXP(40);
-    setTimeout(closeModal, 800);
-}
+    updateUI();
+    setTimeout(closeModal, 800)
+    playAnimation("run", false, 80);
 
-// 🚿 WASH LOGIC
-function startWashGame() {
-    let count = 0;
-    const area = document.getElementById("washArea");
-    for(let i=0; i<5; i++) {
-        const dirt = document.createElement("span");
-        dirt.innerHTML = "💩";
-        dirt.style.position = "absolute";
-        dirt.style.left = Math.random() * 80 + "%";
-        dirt.style.top = Math.random() * 80 + "%";
-        dirt.style.cursor = "pointer";
-        dirt.onclick = () => {
-            dirt.remove();
-            count++;
-            document.getElementById("clean-count").textContent = count;
-            if(count === 5) {
-                pet.clean = 100;
-                addXP(20);
-                setTimeout(closeModal, 800);
-            }
-        };
-        area.appendChild(dirt);
-    }
+    setTimeout(() => {
+        playAnimation("meow", false, 120);
+    }, 1000);
 }
 
 // Початковий запуск
 updateUI();
-function choosePet(type) {
-    currentPetType = type;
+function initPet() {
+    const config = petsConfig["cat"];
 
-    const config = petsConfig[type];
-
-    // показуємо UI
-    document.getElementById("selection-screen").style.display = "none";
-    document.getElementById("pet-ui").style.display = "block";
-
-    // ставимо ім’я
     document.getElementById("pet-name-display").textContent = config.name;
 
-    // ставимо картинку
-    document.getElementById("pet-image").src = config.img;
+    const petEl = document.getElementById("pet-sprite");
+    petEl.style.backgroundImage = `url(${config.animations.idle[0]})`;
 
     updateUI();
     updateInventoryUI();
+    playAnimation("idle");
+    if (soundEnabled) {
+        sounds.purr.play();
+    }
+
+    petEl.onclick = () => {
+        if (currentAction || petState === "dead") return;
+
+        playAnimation("meow", false, 120);
+
+        if (soundEnabled) {
+            sounds.meow.currentTime = 0;
+            sounds.meow.play();
+        }
+    };
 }
+window.onload = () => {
+    initPet();
+
+    document.body.addEventListener("click", startSoundOnce, { once: true });
+};
+
+function startSoundOnce() {
+    if (soundEnabled) {
+        sounds.purr.play();
+    }
+}
+
+function setActionsDisabled(state) {
+    const buttons = document.querySelectorAll(".actions .btn");
+
+    buttons.forEach(btn => {
+        btn.disabled = state;
+        btn.style.opacity = state ? "0.5" : "1";
+        btn.style.pointerEvents = state ? "none" : "auto";
+    });
+}
+
 let firstCard = null;
 let secondCard = null;
 let lock = false;
@@ -402,3 +403,449 @@ function resetTurn() {
     secondCard = null;
     lock = false;
 }
+
+
+let animationInterval;
+
+function playAnimation(name, loop = true, speed = 150) {
+    const petEl = document.getElementById("pet-sprite");
+    const frames = petsConfig[currentPetType].animations[name];
+
+    if (!frames) return;
+
+    let frame = 0;
+
+    clearInterval(animationInterval);
+
+    animationInterval = setInterval(() => {
+        petEl.style.backgroundImage = `url(${frames[frame]})`;
+
+        frame++;
+
+        if (frame >= frames.length) {
+            if (loop) {
+                frame = 0;
+            } else {
+                clearInterval(animationInterval);
+
+                // ❗ НЕ виходимо з death
+                if (name !== "death") {
+                    playAnimation("idle");
+                }
+            }
+        }
+
+    }, speed);
+}
+let sleepInterval;
+let isSleeping = false;
+function startSleep() {
+
+    if (currentAction || petState === "dead") return;
+
+    currentAction = "sleep";
+    isSleeping = true;
+    const gameBox = document.querySelector(".game-box.big");
+    gameBox.classList.add("sleep-mode");
+    const game = document.getElementById("game-area");
+
+    game.classList.add("night");
+
+    playAnimation("sleep", true, 300);
+
+    sleepInterval = setInterval(() => {
+        pet.energy += 5;
+        pet.hunger -= 1;
+
+        normalizePet();
+        updateUI();
+
+        if (pet.energy >= 100) {
+            wakeUp();
+        }
+    }, 1000);
+    setActionsDisabled(true);
+}
+function wakeUp() {
+    isSleeping = false;
+
+    clearInterval(sleepInterval);
+    const gameBox = document.querySelector(".game-box.big");
+    gameBox.classList.remove("sleep-mode");
+    const game = document.getElementById("game-area"); // ✔️ додати
+    game.classList.remove("night");
+
+    playAnimation("sit", false);
+
+    setTimeout(() => {
+        playAnimation("idle");
+    }, 1000);
+    currentAction = null;
+    setActionsDisabled(false);
+}
+
+let sponge;
+let isWashing = false;
+let dirtSpots = [];
+let cleaned = 0;
+function startWash() {
+
+    if (currentAction || petState === "dead") return;
+
+    currentAction = "wash";
+    isWashing = true;
+    document.querySelector(".game-box.big").classList.add("washing");
+    const gameBox = document.querySelector(".game-box.big");
+    gameBox.classList.add("wash-mode");
+
+    const btn = document.querySelector(".actions .btn:nth-child(3)");
+    btn.classList.add("active-wash");
+
+    playAnimation("crouch", true, 200);
+
+    setActionsDisabled(true);
+    createSponge();
+    spawnDirtOnPet();
+}
+
+function createSponge() {
+    sponge = document.createElement("div");
+    sponge.className = "sponge";
+
+    document.querySelector(".pet-stage").appendChild(sponge);
+
+    document.addEventListener("mousemove", moveSponge);
+}
+
+let lastX = 0;
+
+function moveSponge(e) {
+    if (!isWashing) return;
+
+    const stage = document.querySelector(".pet-stage");
+    const rect = stage.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    sponge.style.left = x + "px";
+    sponge.style.top = y + "px";
+
+    // 🔥 rotation (реально виглядає круто)
+    const dx = x - lastX;
+    const angle = dx * 2;
+    sponge.style.transform = `rotate(${angle}deg)`;
+
+    lastX = x;
+
+    checkCleaning(e.clientX, e.clientY);
+}
+function createFoam(x, y) {
+    const foam = document.createElement("div");
+    foam.className = "foam";
+
+    foam.style.left = x;
+    foam.style.top = y;
+
+    document.querySelector(".pet-stage").appendChild(foam);
+
+    setTimeout(() => foam.remove(), 500);
+}
+function spawnDirtOnPet() {
+    const pet = document.getElementById("pet-sprite");
+    const stage = document.querySelector(".pet-stage");
+
+    dirtSpots = [];
+    cleaned = 0;
+
+    for (let i = 0; i < 6; i++) {
+        const dirt = document.createElement("div");
+        dirt.className = "dirt";
+
+        const x = pet.offsetLeft + (Math.random() * pet.offsetWidth * 2.5);
+
+        // 🔥 ОПУСКАЄМО БРУД НИЖЧЕ
+        const y = pet.offsetTop + (pet.offsetHeight * 0.9) + (Math.random() * pet.offsetHeight * 0.5);
+
+        dirt.style.left = x + "px";
+        dirt.style.top = y + "px";
+
+        stage.appendChild(dirt);
+        dirtSpots.push(dirt);
+    }
+}
+function checkCleaning(mouseX, mouseY) {
+    dirtSpots.forEach((dirt, index) => {
+        if (!dirt) return;
+
+        const dRect = dirt.getBoundingClientRect();
+
+        const dx = mouseX - (dRect.left + dRect.width / 2);
+        const dy = mouseY - (dRect.top + dRect.height / 2);
+
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 40) {
+            createFoam(dirt.style.left, dirt.style.top);
+
+            dirt.remove();
+            dirtSpots[index] = null;
+
+            cleaned++;
+            updateWashProgress();
+        }
+    });
+
+    if (cleaned >= 6) finishWash();
+}
+function updateWashProgress() {
+    // поки пусто або лог
+    console.log("washing...");
+}
+function finishWash() {
+    isWashing = false;
+    document.querySelector(".game-box.big").classList.remove("washing");
+    document.removeEventListener("mousemove", moveSponge);
+    sponge.remove();
+
+    const gameBox = document.querySelector(".game-box.big");
+    gameBox.classList.remove("wash-mode");
+
+    const btn = document.querySelector(".actions .btn:nth-child(3)");
+    btn.classList.remove("active-wash");
+
+    if (petState !== "dead") {
+        pet.clean = 100;
+        pet.happiness += 5;
+    }
+    setActionsDisabled(false);
+    normalizePet();
+    updateUI();
+    currentAction = null;
+    playAnimation("jump", false);
+
+    setTimeout(() => {
+        playAnimation("idle");
+    }, 800);
+}
+
+const ball = document.getElementById("ball");
+
+let isBallMoving = false;
+let currentAction = null;
+ball.onclick = () => {
+
+    if (currentAction || petState === "dead") return;
+
+    currentAction = "play";
+    isBallMoving = true;
+    pet.happiness += 10;
+    pet.energy -= 5;
+    pet.clean -= 3;
+    normalizePet();
+    updateUI();
+
+    let x = 0;
+    let y = 0;
+
+    let velocityY = -14;
+    let gravity = 1;
+
+    let speedX = 3;
+
+    let phase = 1; // 1 = вліво, 2 = назад вправо
+
+    let interval = setInterval(() => {
+
+        // 🔼 вертикаль
+        y += velocityY;
+        velocityY += gravity;
+
+        // ⬅️ ФАЗА 1 — ВЛІВО ДО КОТА
+        if (phase === 1) {
+            x -= speedX;
+        }
+
+        // ➡️ ФАЗА 2 — НАЗАД ВПРАВО
+        if (phase === 2) {
+            x += speedX;
+
+            // 🔥 гальмування ТІЛЬКИ біля старту
+            if (x > -30) {
+                speedX *= 0.92;
+            }
+        }
+        ball.style.transform = `translate(${x}px, ${y}px)`;
+
+        // 🐱 удар об землю
+        if (y >= 0) {
+            y = 0;
+            velocityY = -10;
+
+            playAnimation("jump", false, 80);
+        }
+
+        // 🐱 ДОЙШОВ ДО КОТА → назад
+        if (phase === 1 && x < -250) {
+            phase = 2;
+        }
+
+        // 🛑 зупинка
+        if (phase === 2 && x >= -5 && y === 0) {
+            clearInterval(interval);
+
+            ball.style.transform = "translate(0,0)";
+            isBallMoving = false;
+            currentAction = null;
+            playAnimation("idle");
+        }
+
+    }, 30);
+};
+
+let petState = "normal"; // normal | hurt | dead
+function checkPetState() {
+
+    // ☠️ смерть
+    if (
+        pet.happiness === 0 &&
+        pet.clean === 0 &&
+        pet.energy === 0 &&
+        pet.hunger === 0
+    ) {
+        if (petState !== "dead") {
+            petState = "dead";
+
+            playAnimation("death", true, 200);
+            applyDeathState(); // 🔥 ВАЖЛИВО
+        }
+        return;
+    }
+
+    // 😢 поганий стан
+    if (
+        pet.happiness < 50 &&
+        pet.hunger < 50 &&
+        pet.clean < 50 &&
+        pet.energy < 50
+    ) {
+        if (petState !== "hurt") {
+            petState = "hurt";
+            playAnimation("hurt", true, 200);
+        }
+        return;
+    }
+
+    // 🙂 норм
+    if (petState !== "normal") {
+        petState = "normal";
+        playAnimation("idle");
+    }
+
+}
+function applyDeathState() {
+    const game = document.querySelector(".game-box.big");
+    game.classList.add("dead");
+
+    setActionsDisabled(true);
+
+    let btn = document.getElementById("revive-btn");
+
+    if (!btn) {
+        btn = document.createElement("button");
+        btn.id = "revive-btn";
+        btn.className = "btn revive-btn";
+        btn.textContent = "💔 Revive";
+
+        btn.onclick = revivePet;
+
+        game.appendChild(btn);
+    }
+}
+function revivePet() {
+
+    pet.happiness = 50;
+    pet.hunger = 50;
+    pet.clean = 50;
+    pet.energy = 50;
+
+    petState = "normal";
+
+    document.querySelector(".game-box.big").classList.remove("dead");
+
+    setActionsDisabled(false);
+
+    const btn = document.getElementById("revive-btn");
+    if (btn) btn.remove();
+
+    updateUI();
+    playAnimation("idle");
+}
+let currentBubble = null;
+
+function showBubble(text) {
+    if (currentBubble) return; // ❌ вже є → не створюємо нову
+
+    const bubble = document.createElement("div");
+    bubble.className = "speech-bubble";
+    bubble.textContent = text;
+
+    const pet = document.getElementById("pet-sprite");
+
+    const rect = pet.getBoundingClientRect();
+    const stage = document.querySelector(".pet-stage").getBoundingClientRect();
+
+    bubble.style.left = (rect.left - stage.left + rect.width / 2 - 40) + "px";
+    bubble.style.top = (rect.top - stage.top - 40) + "px";
+
+    document.querySelector(".pet-stage").appendChild(bubble);
+
+    currentBubble = bubble;
+
+    setTimeout(() => {
+        bubble.remove();
+        currentBubble = null;
+    }, 2000);
+}
+
+const soundBtn = document.getElementById("sound-toggle");
+
+soundBtn.onclick = () => {
+    soundEnabled = !soundEnabled;
+
+    if (soundEnabled) {
+        soundBtn.textContent = "🔊";
+        soundBtn.classList.remove("off");
+
+        sounds.purr.play();
+    } else {
+        soundBtn.textContent = "🔇";
+        soundBtn.classList.add("off");
+
+        sounds.purr.pause();
+        sounds.purr.currentTime = 0;
+    }
+};
+const gameSection = document.getElementById("game-area");
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+            // 👀 видно гру
+            if (soundEnabled) {
+                sounds.purr.play().catch(() => {});
+            }
+
+        } else {
+            // 🚫 не видно
+            sounds.purr.pause();
+            sounds.purr.currentTime = 0;
+        }
+
+    });
+}, {
+    threshold: 0.4 // скільки % блоку має бути видно
+});
+
+observer.observe(gameSection);
